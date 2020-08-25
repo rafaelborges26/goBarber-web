@@ -10,7 +10,7 @@ import Button from '../../components/Button'
 
 const SignOut: React.FC = () => {
     
-    function handleSubmit(data: object) {
+    function handleSubmit(data: object) : void {
         console.log(data)
     }   
 
@@ -23,7 +23,7 @@ return (
         <Content>
             <img src={logoImg} alt="GoBarber"/>
     
-            <Form onSubmit={handleSubmit}>
+            <Form initialData={{ name: 'rafael' }} onSubmit={handleSubmit}>
                 <h1>Faça seu cadastro</h1>
     
                 <Input name="name"  icon={FiUser} placeholder="Nome"/>
