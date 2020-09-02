@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import {shade} from 'polished'
+import {shade} from 'polished' //para escurecer a tela ao passar o mouse
 
 import signInBackgroundImg from '../../assets/sign-in-background.png'
 
@@ -37,7 +37,7 @@ export const Content = styled.div`
         text-decoration: none;
         transition: color 0.2s; 
 
-        &:hover {
+        &:hover { /* ao passar o mouse escurecer o botao */
             color: ${shade(0.2, '#F4EDE8' )}
         }
     
@@ -69,6 +69,6 @@ export const Content = styled.div`
 
 export const Background = styled.div`
     flex: 1;
-    background: url(${signInBackgroundImg}) no-repeat center;
+    background: url(${signInBackgroundImg}) no-repeat center; /** add uma imagem */
     background-size: cover;
 ` 
