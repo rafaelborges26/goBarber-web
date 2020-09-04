@@ -31,7 +31,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         }
     })
 
-   const signIn = useCallback(async ({email, password}) => {
+   const signIn = useCallback(async ({email, password}) => { //metodo para login
     const response = await api.post('sessions', {
         email,
         password
@@ -44,12 +44,12 @@ export const AuthProvider: React.FC = ({ children }) => {
         setData({token, user})
    }, [])
 
-   const signOut = useCallback(() => {
+    const signOut = useCallback(() => { //metodo para logout
     localStorage.removeItem('@GoBarber.token')
     localStorage.removeItem('@GoBarber.user')
 
     setData({} as AuthState)
-},[])
+    },[])
 
     return (
         <AuthContext.Provider value={{user: data.user, signIn, signOut}} >

@@ -10,6 +10,7 @@ import Input from '../../components/Input'
 import Button from '../../components/Button'
 import getValidationErrors from '../../utils/getValidationErrors'
 import { useAuth } from '../../hooks/AuthContext'
+import { useToast } from '../../hooks/ToastContext'
 
 interface SignInFormData {
     email: string,
@@ -21,6 +22,7 @@ const SignIn: React.FC = () => {
     const formRef = useRef<FormHandles>(null) 
 
     const {signIn} = useAuth() //obtendo as variaveis globais
+    const { addToast } = useToast()
 
     const handleSubmit = useCallback(async (data: SignInFormData) => {
         try{
@@ -36,16 +38,24 @@ const SignIn: React.FC = () => {
             await schema.validate(data, {
                 abortEarly: false, //mostrar todos os erros
             })
-            signIn({
+            await signIn({
                 email: data.email,
                 password: data.password
             }) //funcao global
         } catch(err)  {
-            const errors = getValidationErrors(err)
+            if(err instanceof Yup.ValidationError) {
 
-            formRef.current?.setErrors(errors);
-        }
-    },[signIn])
+                const errors = getValidationErrors(err)
+                formRef.current?.setErrors(errors);
+            }
+
+            addToast({
+                title: 'Erro na autenticação',
+                type: 'error',
+                description: 'Ocorreu um erro ao fazer login, cheque as credenciais.'
+            })
+    }
+    },[signIn, addToast])
 
 
     return (
