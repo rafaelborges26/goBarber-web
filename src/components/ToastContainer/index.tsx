@@ -1,5 +1,4 @@
 import React from 'react'
-import { FiAlertCircle, FiXCircle } from 'react-icons/fi'
 
 import Toast from './Toast'
 
@@ -14,7 +13,7 @@ const ToastContainer: React.FC<ToastContainerProps> = ( {messages} ) => {
     return (
         <Container>
         {messages.map(message => (
-            <Toast key={message.id} toast={message} />
+            <Toast key={message.id} message={message} />
         ))}
         </Container>
     )

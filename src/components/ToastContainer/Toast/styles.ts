@@ -1,6 +1,12 @@
 import styled, { css } from 'styled-components'
 
 
+interface ContainerProps {
+    type?: 'info' | 'success' | 'error'
+    hasDescription: boolean
+}
+
+
 const toastTypeVariations = { //tipos de toast 
     info: css`
         background: #ebf8ff;
@@ -17,13 +23,7 @@ const toastTypeVariations = { //tipos de toast
 
 }
 
-interface ToastProps {
-    type?: 'info' | 'success' | 'error'
-    hasDescription: boolean
-}
-
-
-export const Container = styled.div<ToastProps>`
+export const Container = styled.div<ContainerProps>`
     width: 360px;
 
     position: relative; 
