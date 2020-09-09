@@ -3,9 +3,10 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi'
 import { Form } from '@unform/web'
 import { FormHandles } from '@unform/core'
 import * as Yup from 'yup' //para validação
+import { Link } from 'react-router-dom'
 
 import logoImg from '../../assets/logo.svg'
-import { Container, Content, Background } from './styles'
+import { Container, Content, AnimationContainer, Background } from './styles'
 import Input from '../../components/Input'
 import Button from '../../components/Button'
 import getValidationErrors from '../../utils/getValidationErrors'
@@ -42,13 +43,15 @@ const SignIn: React.FC = () => {
                 password: data.password
             }) //funcao global
         } catch(err)  {
-            if(err instanceof Yup.ValidationError) {
+            if(err instanceof Yup.ValidationError) { //se o erro vier do validationError (email invalido, sem senha)
 
                 const errors = getValidationErrors(err)
                 formRef.current?.setErrors(errors);
+
+                return;
             }
 
-            addToast({
+            addToast({ //se tiver problemas nas credenciais
                 title: 'Erro na autenticação',
                 type: 'error',
                 description: 'Ocorreu um erro ao fazer login, cheque as credenciais.'
@@ -61,6 +64,7 @@ const SignIn: React.FC = () => {
     <>
     <Container> 
         <Content>
+         <AnimationContainer>
             <img src={logoImg} alt="GoBarber"/>
 
             <Form ref={formRef} onSubmit={handleSubmit}>
@@ -74,11 +78,11 @@ const SignIn: React.FC = () => {
                 <a href="forgot">Esqueci minha senha</a>
             </Form>
 
-        <a href="create">
-            <FiLogIn />
-            Criar conta
-        </a>
-
+            <Link to="/signup">
+                <FiLogIn />
+                Criar conta
+            </Link>
+            </AnimationContainer>
         </Content>
 
         <Background />
