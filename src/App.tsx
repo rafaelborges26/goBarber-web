@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter as Router} from 'react-router-dom'
 
-import SignIn from './pages/signin'
+import SignIn from './pages/SignIn'
 import GlobalStyle from './styles/global'
 import AppProvider from './hooks'
 import Routes from './routes'
