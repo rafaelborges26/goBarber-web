@@ -1,5 +1,5 @@
-import React from 'react'
-import { Container, Header, HeaderContent, Profile, Content, Schedule,  NextAppointment, Calendar } from './styles'
+import React, {useState} from 'react'
+import { Container, Header, HeaderContent, Profile, Content, Schedule, NextAppointment, Section, Appointment, Calendar } from './styles'
 
 import logoImg from '../../assets/logo.svg'
 import { FiClock, FiPower } from 'react-icons/fi'
@@ -8,6 +8,7 @@ import { useAuth } from '../../hooks/AuthContext'
 const Dashboard: React.FC = () => {  //so sera acessivel se o usuario tiver logado
     
     const { signOut, user } = useAuth()
+    const [selectedDate, setSelectedDate] = useState(new Date())
 
     console.log(user)
 
@@ -53,6 +54,56 @@ const Dashboard: React.FC = () => {  //so sera acessivel se o usuario tiver loga
                     </span>
                 </div>
             </NextAppointment>
+
+            <Section>
+                <strong>Manhã</strong>
+
+
+                <Appointment>
+                    <span>
+                        <FiClock />
+                        08:00
+                    </span>
+
+                    <div>
+                        <img src={user.avatar_url} alt="Rafael Borges"/>
+                        <strong>Rafael Borges</strong>
+                    </div>
+
+                </Appointment>
+
+            </Section>
+
+            <Section>
+                <strong>Tarde</strong>
+
+                <Appointment>
+                    <span>
+                        <FiClock />
+                        08:00
+                    </span>
+
+                    <div>
+                        <img src={user.avatar_url} alt="Rafael Borges"/>
+                        <strong>Rafael Borges</strong>
+                    </div>
+
+                </Appointment>
+
+
+                <Appointment>
+                    <span>
+                        <FiClock />
+                        08:00
+                    </span>
+
+                    <div>
+                        <img src={user.avatar_url} alt="Rafael Borges"/>
+                        <strong>Rafael Borges</strong>
+                    </div>
+
+                </Appointment>
+            </Section>
 
             </Schedule>
 
