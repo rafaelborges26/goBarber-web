@@ -32,10 +32,12 @@ export const AuthProvider: React.FC = ({ children }) => {
         const user = localStorage.getItem('@GoBarber.user')
 
         if(token && user) {
+            api.defaults.headers.authorization = `Bearer ${token}` //automatizar o token nas rotas
             return {token, user: JSON.parse(user)}
-        } else {
-            return ({} as AuthState)
+
         }
+        
+        return ({} as AuthState)
     })
 
    const signIn = useCallback(async ({email, password}) => { //metodo para login
@@ -48,6 +50,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     localStorage.setItem('@GoBarber.token', token)
     localStorage.setItem('@GoBarber.user', JSON.stringify(user)) //usar stringfy por ser um objeto
+
+    api.defaults.headers.authorization = `Bearer ${token}`
         setData({token, user})
    }, [])
 
