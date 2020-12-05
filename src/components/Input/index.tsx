@@ -9,9 +9,10 @@ import Tooltip from '../Tooltip'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     name: string
+    containerStyle?: object
     icon?: React.ComponentType<IconBaseProps>
 }
-const Input: React.FC<InputProps> = ({name ,icon: Icon, ...rest}) => {
+const Input: React.FC<InputProps> = ({name , containerStyle = {}, icon: Icon, ...rest}) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const [isFocused, setIsFocused] = useState(false)
     const [isFilled, setIsFilled] = useState(false)
@@ -42,9 +43,9 @@ const Input: React.FC<InputProps> = ({name ,icon: Icon, ...rest}) => {
     },[fieldName, registerField])
 
     return (
-    <Container isErrored={!!error} isFilled={isFilled} isFocused={isFocused}>
+    <Container style={containerStyle} isErrored={!!error} isFilled={isFilled} isFocused={isFocused}>
         {Icon && <Icon size={20} />}
-        <input 
+        <input
             defaultValue={defaultValue} 
             ref={inputRef} 
             {...rest /*para pegar todas as propriedades do component */}

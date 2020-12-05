@@ -9,6 +9,7 @@ import logoImg from '../../assets/logo.svg'
 import { FiClock, FiPower } from 'react-icons/fi'
 import { useAuth } from '../../hooks/AuthContext'
 import api from '../../services/api'
+import { Link } from 'react-router-dom'
 
 interface MonthAvailabilityItem {
     day: number
@@ -125,7 +126,9 @@ const Dashboard: React.FC = () => {  //so sera acessivel se o usuario tiver loga
                     <img src={user.avatar_url} alt={user.name}/>
                     <div>
                         <span>Bem vindo</span>
-                        <strong>{user.name}</strong>
+                        <Link to="/profile">
+                            <strong>{user.name}</strong>
+                        </Link>
                     </div>
                 </Profile>
 
