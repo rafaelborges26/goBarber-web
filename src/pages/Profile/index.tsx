@@ -15,9 +15,11 @@ import { useAuth } from '../../hooks/AuthContext'
 
 
 interface ProfileFormData {
-    name: string,
-    email: string,
-    password: string,
+    name: string
+    email: string
+    old_password: string
+    password: string
+    password_confirmation: string
 }
 
 const Profile: React.FC = () => {
@@ -54,21 +56,48 @@ const Profile: React.FC = () => {
             const schema = Yup.object().shape({
                 name: Yup.string().required('Nome obrigatório'), //informar que é string obrigatório
                 email: Yup.string().required('E-mail obrigatório').email('Digite um e-mail válido'),
-                password: Yup.string().min(6, 'No mínimo 6 digitos') //minimo 6 caracteres
+                old_password: Yup.string(),
+                password: Yup.string().when('old_password', //se o campo tiver preenchido esse campo deve ser obrigatorio 
+                {
+                    is: val => !!val.length,
+                    then: Yup.string().required('Campo obrigatório'),
+                    otherwise: Yup.string()   
+                }), //condicional
+                password_confirmation: Yup.string().when('old_password', //se o campo tiver preenchido esse campo deve ser obrigatorio 
+                {
+                    is: val => !!val.length,
+                    then: Yup.string().required('Campo obrigatório'),
+                    otherwise: Yup.string()   
+                }) //condicional
+                .oneOf(
+                    [Yup.ref('password'), undefined], 
+                    'Confirmação incorreta' 
+                )
             })
 
             await schema.validate(data, {
                 abortEarly: false, //mostrar todos os erros
             })
 
-        api.post('/users', data)
+            const formData = Object.assign({
+                name: data.name,
+                email: data.email,
+            }, data.old_password ? {
+                old_passowd: data.old_password,
+                password: data.password,
+                password_confirmation: data.password_confirmation
+            } : {}) //se tiver a old_password preenchida, envia os campos de password pro backend, se n tiver n envia  
 
-        history.push('/')
+       const response = await api.put('/profile', formData)
+
+       updateUser(response.data)
+
+        history.push('/dashboard')
         
         addToast({
             type: 'success',
-            title: 'Cadastro realizado!',
-            description: 'Você já pode fazer seu logon no GoBarber!'
+            title: 'Perfil atualizado!',
+            description: 'Suas informações do perfil foram atualizadas com sucesso!'
         })
 
         } catch(err)  {
@@ -84,8 +113,8 @@ const Profile: React.FC = () => {
 
             addToast({
                 type: 'error',
-                title: 'Erro no cadastro',
-                description: 'Ocorreu um erro ao fazer cadastro, tente novamente.'
+                title: 'Erro na atualização',
+                description: 'Ocorreu um erro ao atualizar perfil, tente novamente.'
             })
 
         }
