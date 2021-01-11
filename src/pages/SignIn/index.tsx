@@ -3,7 +3,7 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi'
 import { Form } from '@unform/web'
 import { FormHandles } from '@unform/core'
 import * as Yup from 'yup' //para validação
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import logoImg from '../../assets/logo.svg'
 import { Container, Content, AnimationContainer, Background } from './styles'
@@ -21,9 +21,12 @@ interface SignInFormData {
 
 const SignIn: React.FC = () => { 
     
+    const history = useHistory()
+
     const formRef = useRef<FormHandles>(null) 
 
     const {signIn} = useAuth() //obtendo as variaveis globais
+    console.log(signIn, "teste")
     const { addToast } = useToast()
 
     const handleSubmit = useCallback(async (data: SignInFormData) => {
@@ -43,6 +46,8 @@ const SignIn: React.FC = () => {
                 email: data.email,
                 password: data.password
             }) //funcao global
+
+            history.push('/dashboard')
 
         } catch(err)  {
             if(err instanceof Yup.ValidationError) { //se o erro vier do validationError (email invalido, sem senha)
