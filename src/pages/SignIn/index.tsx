@@ -26,7 +26,7 @@ const SignIn: React.FC = () => {
     const formRef = useRef<FormHandles>(null) 
 
     const {signIn} = useAuth() //obtendo as variaveis globais
-    console.log(signIn, "teste")
+
     const { addToast } = useToast()
 
     const handleSubmit = useCallback(async (data: SignInFormData) => {
