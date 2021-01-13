@@ -8,6 +8,8 @@ const mockedAddToast = jest.fn()
 
 const mockedSignUp = jest.fn()
 
+const mockedSignUpError = jest.fn()
+
 jest.mock('react-router-dom', () => {
     return {
         useHistory: () => ({
@@ -29,12 +31,10 @@ jest.mock('../../hooks/ToastContext', () => {
 jest.mock('../../services/api', () => {
     return {
         post: () => ({
-            signUp: mockedSignUp
+            data: mockedSignUp,
         })
     }
 } )
-
-
 
 describe('SignUp Page', () => {
     beforeEach(() => {
@@ -42,6 +42,8 @@ describe('SignUp Page', () => {
     })
   
 it('should be able to sign up', async () => {
+
+
     const { getByPlaceholderText, getByText } = render(<SignUp />)
 
     const nameField = getByPlaceholderText('Nome')
@@ -54,11 +56,19 @@ it('should be able to sign up', async () => {
     fireEvent.change(passwordField, {target: {value: '123456'} })
     fireEvent.click(buttonElement)
 
+    
     await waitFor(() => {
-        expect(mockedHistoryPush).toHaveBeenCalledWith('/')
+        expect(mockedHistoryPush).toHaveBeenCalledWith("/")
     })
 
-    
+    await waitFor(() => {
+        expect(mockedAddToast).toHaveBeenCalledWith(
+            expect.objectContaining({
+                type: 'success'
+            })
+        )
+    })
+
 })
 
 it('should not be able to sign up with invalid credentials', async () => {
@@ -77,39 +87,7 @@ it('should not be able to sign up with invalid credentials', async () => {
     await waitFor(() => {
         expect(mockedHistoryPush).not.toHaveBeenCalledWith()
     })
-
-    
-    
-})
-
-
-it('should display an error if login fails', async () => {
-
-    mockedSignUp.mockImplementation(() => {
-        throw new Error()
-    }) //substituir por essa funcao 
-
-
-    const { getByPlaceholderText, getByText } = render(<SignUp />)
-
-    const nameField = getByPlaceholderText('Nome')
-    const emailField = getByPlaceholderText('E-mail')
-    const passwordField = getByPlaceholderText('Senha')
-    const buttonElement = getByText('Cadastrar')
-
-    fireEvent.change(nameField, {target: {value: 'John Due'} })
-    fireEvent.change(emailField, { target: {value: 'johndoe@example.com'} })
-    fireEvent.change(passwordField, {target: {value: '123456'} })
-    fireEvent.click(buttonElement)
-
-    await waitFor(() => {
-        expect(mockedSignUp).toHaveBeenCalledWith(
-            expect.objectContaining({
-                type: 'error'
-            })
-        )
-    })
-    
+        
 })
 
 })

@@ -47,7 +47,7 @@ const SignOut: React.FC = () => {
         api.post('/users', data)
 
         history.push('/')
-        
+
         addToast({
             type: 'success',
             title: 'Cadastro realizado!',
