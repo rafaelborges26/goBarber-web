@@ -87,7 +87,7 @@ it('should not be able to sign up with invalid credentials', async () => {
     await waitFor(() => {
         expect(mockedHistoryPush).not.toHaveBeenCalledWith()
     })
-        
+    
 })
 
 })
