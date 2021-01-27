@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^4.0.1",
+    "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.2",
     "@types/yup": "^0.29.6",
     "axios-mock-adapter": "^1.19.0",
