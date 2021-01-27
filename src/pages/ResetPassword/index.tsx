@@ -12,7 +12,6 @@ import Button from '../../components/Button'
 import getValidationErrors from '../../utils/getValidationErrors'
 import { useToast } from '../../hooks/ToastContext'
 import api from '../../services/api'
-import { cpuUsage } from 'process'
 
 interface ResetPasswordFormData {
     password: string,

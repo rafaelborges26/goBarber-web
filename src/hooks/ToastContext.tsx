@@ -1,7 +1,5 @@
 import  React ,{ createContext, useContext, useCallback, useState } from 'react'
 import { uuid } from 'uuidv4'
-
-import { useAuth } from './AuthContext'
 import ToastContainer from '../components/ToastContainer'
 
 
@@ -35,7 +33,7 @@ const ToastProvider: React.FC = ({ children }) => { //metodos
         }
 
         setMessages(state =>  [...state, toast])
-    },[messages])
+    },[])
 
     const removeToast = useCallback((id: string) => {
         setMessages((state) => state.filter((message) => message.id !== id))

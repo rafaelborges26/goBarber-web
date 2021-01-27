@@ -12,7 +12,6 @@ import Button from '../../components/Button'
 import getValidationErrors from '../../utils/getValidationErrors'
 import { useAuth } from '../../hooks/AuthContext'
 import { useToast } from '../../hooks/ToastContext'
-import api from '../../services/api'
 
 interface SignInFormData {
     email: string,
@@ -64,7 +63,7 @@ const SignIn: React.FC = () => {
                 description: 'Ocorreu um erro ao fazer login, cheque as credenciais.'
             })
     }
-    },[signIn, addToast])
+    },[signIn, addToast, history])
 
 
     return (
